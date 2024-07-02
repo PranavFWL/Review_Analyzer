@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .result p {
+            font-size: 1.2rem;
+        }
+        .result strong {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Sentiment Analysis</h1>
+        <form method="POST" action="/analyze" class="mt-4">
+            <div class="form-group">
+                <label for="message">Type your message:</label>
+                <input type="text" class="form-control" id="message" name="message" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Analyze</button>
+        </form>
+        {% if sentiment %}
+        <div class="result mt-4">
+            <h2>Input Message:</h2>
+            <p>{{ message }}</p>
+            <h2>Sentiment:</h2>
+            <p><strong>{{ sentiment }}</strong></p>
+        </div>
+        {% endif %}
+        <hr>
+        <h2 class="text-center">Upload CSV for Sentiment Analysis</h2>
+        <form method="POST" action="/upload" enctype="multipart/form-data" class="mt-4">
+            <div class="form-group">
+                <label for="file">Upload CSV file with reviews:</label>
+                <input type="file" class="form-control-file" id="file" name="file" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload and Analyze</button>
+        </form>
+        {% if review_counts %}
+        <div class="result mt-4">
+            <h2>Review Sentiment Counts:</h2>
+            <ul>
+                {% for sentiment, count in review_counts.items() %}
+                <li><strong>{{ sentiment }}:</strong> {{ count }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    <!-- Add Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
